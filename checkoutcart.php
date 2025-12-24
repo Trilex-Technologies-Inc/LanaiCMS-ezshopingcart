@@ -22,7 +22,9 @@ if (!empty($_REQUEST['ac']) && $_REQUEST['ac'] == "login") {
 } else {
 ?>
 
-<div class="container my-4">
+<div class="col-md-12">
+    <div class="article-content bg-white p-4 rounded shadow-sm">
+
 
 <? if (!$sys_lanai->isUserLogin()) { ?>
 
@@ -168,3 +170,4 @@ if (!empty($_REQUEST['ac']) && $_REQUEST['ac'] == "login") {
 </div>
 
 <? } // action ?>
+</div>

@@ -22,10 +22,10 @@ $rsshconfig = $ezshop->getShowcaseConfig();
     }
 </script>
 
-<? $ezshop->getJumpBox("c", $rs->fields['catId'], 0, $rs->fields['prdTitle']); ?>
 
-<div class="container my-4">
-    <div class="row">
+<div class="col-md-8">
+    <div class="article-content bg-white p-4 rounded shadow-sm">
+        <? $ezshop->getJumpBox("c", $rs->fields['catId'], 0, $rs->fields['prdTitle']); ?>
 
         <!-- PRODUCT IMAGES -->
         <div class="col-md-5 text-center mb-4">
@@ -131,5 +131,12 @@ $rsshconfig = $ezshop->getShowcaseConfig();
             }
             ?>
         </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="sidebar">
+        <?php
+        $ezshop->getMenu(null, null, null);
+        ?>
     </div>
 </div>

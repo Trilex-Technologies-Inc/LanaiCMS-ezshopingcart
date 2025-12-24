@@ -37,100 +37,107 @@ switch ($_REQUEST['ac']) {
 /* GET CART */
 $rs = $ezcart->getProductInCart(0);
 ?>
+<div class="col-md-12">
+    <div class="article-content bg-white p-4 rounded shadow-sm">
+        <h4 class="mb-4"><?= _EZSHOP_YOUR_CART; ?></h4>
 
-<h4 class="mb-4"><?=_EZSHOP_YOUR_CART; ?></h4>
+        <script type="text/javascript">
+            function updatecart() {
+                document.cart.ac.value = "update";
+                document.cart.submit();
+            }
 
-<script type="text/javascript">
-    function updatecart() {
-        document.cart.ac.value = "update";
-        document.cart.submit();
-    }
-    function removeitem(cid) {
-        if (confirm("<?=_DELETE_QUESTION; ?>")) {
-            document.cart.cid.value = cid;
-            document.cart.ac.value = "remove";
-            document.cart.submit();
-        }
-    }
-    function back2shop() {
-        location.href = "module.php?modname=ezshopingcart&ac=a";
-    }
-    function checkout() {
-        location.href = "module.php?modname=ezshopingcart&mf=checkoutcart";
-    }
-</script>
+            function removeitem(cid) {
+                if (confirm("<?=_DELETE_QUESTION; ?>")) {
+                    document.cart.cid.value = cid;
+                    document.cart.ac.value = "remove";
+                    document.cart.submit();
+                }
+            }
 
-<form name="cart" action="<?=$_SERVER['PHP_SELF']; ?>" method="POST">
-<input type="hidden" name="modname" value="<?=$module_name; ?>">
-<input type="hidden" name="mf" value="viewcart">
-<input type="hidden" name="cid" value="0">
-<input type="hidden" name="ac" value="update">
+            function back2shop() {
+                location.href = "module.php?modname=ezshopingcart&ac=a";
+            }
 
-<div class="container">
-    <div class="row fw-bold border-bottom pb-2 mb-3">
-        <div class="col-2 text-center"><?=_QTY; ?></div>
-        <div class="col-6"><?=_DESCRIPTION; ?></div>
-        <div class="col-2 text-end"><?=_PRICE; ?></div>
-        <div class="col-2 text-end"><?=_AMOUNT; ?></div>
+            function checkout() {
+                location.href = "module.php?modname=ezshopingcart&mf=checkoutcart";
+            }
+        </script>
+
+        <form name="cart" action="<?= $_SERVER['PHP_SELF']; ?>" method="POST">
+            <input type="hidden" name="modname" value="<?= $module_name; ?>">
+            <input type="hidden" name="mf" value="viewcart">
+            <input type="hidden" name="cid" value="0">
+            <input type="hidden" name="ac" value="update">
+
+            <div class="container">
+                <div class="row fw-bold border-bottom pb-2 mb-3">
+                    <div class="col-2 text-center"><?= _QTY; ?></div>
+                    <div class="col-6"><?= _DESCRIPTION; ?></div>
+                    <div class="col-2 text-end"><?= _PRICE; ?></div>
+                    <div class="col-2 text-end"><?= _AMOUNT; ?></div>
+                </div>
+
+                <? while (!$rs->EOF) { ?>
+                    <?
+                    $rspitem = $ezcart->getProductItem($rs->fields['prdId']);
+                    $amount = $rs->fields['prdPrice'] * $rs->fields['crtQuantity'];
+                    $sbtotal += $amount;
+                    ?>
+                    <div class="row align-items-center border-bottom py-2">
+                        <div class="col-2 text-center">
+                            <input name="crtQt[]" value="<?= $rs->fields['crtQuantity']; ?>"
+                                   class="form-control form-control-sm text-center mb-1" type="number" min="0">
+                            <input name="prdId[]" type="hidden" value="<?= $rs->fields['prdId']; ?>">
+                            <a href="javascript:removeitem(<?= $rs->fields['prdId']; ?>);"
+                               class="text-danger small text-decoration-none">
+                                <?= _REMOVE; ?>
+                            </a>
+                        </div>
+
+                        <div class="col-6">
+                            <?= $rspitem->fields['prdTitle']; ?>
+                        </div>
+
+                        <div class="col-2 text-end">
+                            <?= $rs->fields['prdPrice']; ?>
+                        </div>
+
+                        <div class="col-2 text-end fw-bold">
+                            <?= $amount; ?>
+                        </div>
+                    </div>
+                    <? $rs->movenext(); ?>
+                <? } ?>
+
+                <? if ($rs->recordcount() > 0) { ?>
+                    <div class="row mt-4 align-items-center">
+                        <div class="col-md-6 mb-2">
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    onclick="updatecart();">
+                                <?= _UPDATE; ?>
+                            </button>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <h5><?= _SUBTOTAL; ?>: <strong><?= $sbtotal; ?></strong></h5>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col text-end">
+                            <button type="button" class="btn btn-outline-secondary me-2"
+                                    onclick="back2shop();">
+                                <?= _BACK2SHOP; ?>
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    onclick="checkout();">
+                                <?= _CHECKOUT; ?>
+                            </button>
+                        </div>
+                    </div>
+                <? } ?>
+            </div>
+
+        </form>
     </div>
-
-    <? while (!$rs->EOF) { ?>
-        <?
-            $rspitem = $ezcart->getProductItem($rs->fields['prdId']);
-            $amount = $rs->fields['prdPrice'] * $rs->fields['crtQuantity'];
-            $sbtotal += $amount;
-        ?>
-        <div class="row align-items-center border-bottom py-2">
-            <div class="col-2 text-center">
-                <input name="crtQt[]" value="<?=$rs->fields['crtQuantity']; ?>"
-                       class="form-control form-control-sm text-center mb-1" type="number" min="0">
-                <input name="prdId[]" type="hidden" value="<?=$rs->fields['prdId']; ?>">
-                <a href="javascript:removeitem(<?=$rs->fields['prdId']; ?>);"
-                   class="text-danger small text-decoration-none">
-                    <?=_REMOVE; ?>
-                </a>
-            </div>
-
-            <div class="col-6">
-                <?=$rspitem->fields['prdTitle']; ?>
-            </div>
-
-            <div class="col-2 text-end">
-                <?=$rs->fields['prdPrice']; ?>
-            </div>
-
-            <div class="col-2 text-end fw-bold">
-                <?=$amount; ?>
-            </div>
-        </div>
-        <? $rs->movenext(); ?>
-    <? } ?>
-
-    <? if ($rs->recordcount() > 0) { ?>
-        <div class="row mt-4 align-items-center">
-            <div class="col-md-6 mb-2">
-                <button type="button" class="btn btn-outline-secondary btn-sm"
-                        onclick="updatecart();">
-                    <?=_UPDATE; ?>
-                </button>
-            </div>
-            <div class="col-md-6 text-end">
-                <h5><?=_SUBTOTAL; ?>: <strong><?=$sbtotal; ?></strong></h5>
-            </div>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col text-end">
-                <button type="button" class="btn btn-outline-secondary me-2"
-                        onclick="back2shop();">
-                    <?=_BACK2SHOP; ?>
-                </button>
-                <button type="button" class="btn btn-primary"
-                        onclick="checkout();">
-                    <?=_CHECKOUT; ?>
-                </button>
-            </div>
-        </div>
-    <? } ?>
 </div>
-</form>

@@ -13,7 +13,8 @@ $subtotal = 0;
 $tqty     = 0;
 $ezcart   = new EzShoppingCart();
 ?>
-
+<div class="col-md-12">
+    <div class="article-content bg-white p-4 rounded shadow-sm">
 <span class="txtContentTitle"><?=_EZSHOP_CHECKOUT_RESULT;?></span><br/><br/>
 <?=_EZSHOP_CHECKOUT_RESULT_INSTRUCTION;?><br/><br/>
 
@@ -65,3 +66,5 @@ if ($payitem->recordcount() > 0 && !empty($payitem->fields['payModule'])) {
 <img src="theme/<?=$cfg['theme'];?>/images/worning.gif" align="absmiddle"/>
 <?= _EZSHOP_CANNOT_SAVE_CART; ?>
 <?php } ?>
+    </div>
+</div>
