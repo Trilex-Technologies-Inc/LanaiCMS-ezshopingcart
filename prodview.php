@@ -22,8 +22,14 @@ $rsshconfig = $ezshop->getShowcaseConfig();
     }
 </script>
 
-
-<div class="col-md-8">
+<div class="col-md-12">
+   
+        <?php
+        $ezshop->getMenu(null, null, null);
+        ?>
+   
+</div>
+<div class="col-md-12">
     <div class="article-content bg-white p-4 rounded shadow-sm">
         <? $ezshop->getJumpBox("c", $rs->fields['catId'], 0, $rs->fields['prdTitle']); ?>
 
@@ -133,10 +139,4 @@ $rsshconfig = $ezshop->getShowcaseConfig();
         </div>
     </div>
 </div>
-<div class="col-md-4">
-    <div class="sidebar">
-        <?php
-        $ezshop->getMenu(null, null, null);
-        ?>
-    </div>
-</div>
+

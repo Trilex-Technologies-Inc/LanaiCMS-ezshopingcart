@@ -1,17 +1,19 @@
 <?php
-// ===============================
-// PAYPAL CONFIG (SANDBOX)
-// ===============================
 $PAYPAL_CLIENT_ID = $payitem->fields['payToken'];
 $CURRENCY = $payitem->fields['currency'];
+$is_sandbox = $payitem->fields['is_sandbox'];
 
-// $amt, $prd, $inv come from checkout file
+if ($is_sandbox) {
+    $paypal_sdk_url = "https://www.sandbox.paypal.com/sdk/js?client-id=" . $PAYPAL_CLIENT_ID . "&currency=" . $CURRENCY;
+} else {
+    $paypal_sdk_url = "https://www.paypal.com/sdk/js?client-id=" . $PAYPAL_CLIENT_ID . "&currency=" . $CURRENCY;
+}
 ?>
 <div style="max-width:400px;margin-top:20px">
     <div id="paypal-button-container"></div>
 </div>
 
-<script src="https://www.sandbox.paypal.com/sdk/js?client-id=<?=$PAYPAL_CLIENT_ID;?>&currency=<?=$CURRENCY;?>"></script>
+<script src="<?= $paypal_sdk_url ?>"></script>
 
 <script>
 paypal.Buttons({

@@ -170,7 +170,7 @@
 							  payDescription TEXT NULL,
 							  payModule VARCHAR(30) NULL,
 							  payToken VARCHAR(250) NULL,
-							
+                              isSandbox TINYINT(1) NOT NULL DEFAULT 0,
                               paySecret VARCHAR(250) NULL,
                               currency VARCHAR(10) NULL,
 							  

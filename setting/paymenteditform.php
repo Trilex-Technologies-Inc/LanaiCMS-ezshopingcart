@@ -21,8 +21,8 @@ $rs = $ezshop->getPaymentMethod($_REQUEST['mid']);
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 <a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a><br><br>
 
-<table cellpadding="3" cellspacing="1">
 <form name="form" method="post" action="<?=$_SERVER['PHP_SELF'];?>">
+<table cellpadding="3" cellspacing="1">
 
 <input type="hidden" name="modname" value="<?=$module_name;?>">
 <input type="hidden" name="mf" value="ezedit">
@@ -119,5 +119,15 @@ $rs = $ezshop->getPaymentMethod($_REQUEST['mid']);
     </td>
 </tr>
 
-</form>
+<tr>
+    <td><?=_SANDBOX_MODE;?></td>
+    <td>
+        <select name="is_sandbox">
+            <option value="0" <?=($rs->fields['is_sandbox']==0)?'selected':'';?>>No</option>
+            <option value="1" <?=($rs->fields['is_sandbox']==1)?'selected':'';?>>Yes</option>
+        </select>
+    </td>
+</tr>
+
 </table>
+</form>

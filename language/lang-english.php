@@ -83,6 +83,7 @@
 	// shipping
 	define("_EZSHOP_SHIPPING_SETTING_INSTRUCTION","Click 'New' to create new product category, Check box to selecte items click 'Delete' to delete selected items");
 	define("_TYPE","Rate Type");
+      define("_SANDBOX_MODE","Sandbox Mode");
 	// new shipping
 	define("_EZSHOP_SHIPPING_NEW_INSTRUCTION","Please complete following form all fields are reqeired.");
 	define("_SHIPPING_RATE","Shipping Rate");
@@ -187,6 +188,8 @@
 	define("_PASSWORD","Password"); 	
 	define("_USER_SIGNUP","Sign Up");
 	define("_USER_LOST","lost password");
+define("_MEMBER_CAPTEXT","Security Code");
+define("_ENTER_CAPTCHA","Enter Captcha");
 	define("_LOGIN","Sign In");
 
 ?>

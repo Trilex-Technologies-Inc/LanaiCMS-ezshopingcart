@@ -12,7 +12,15 @@ $cartstr  = '';
 $subtotal = 0;
 $tqty     = 0;
 $ezcart   = new EzShoppingCart();
+$ezshop = new EzShop2();
 ?>
+<div class="col-md-12">
+
+    <?php
+    $ezshop->getMenu(null, null, null);
+    ?>
+
+</div>
 <div class="col-md-12">
     <div class="article-content bg-white p-4 rounded shadow-sm">
 <span class="txtContentTitle"><?=_EZSHOP_CHECKOUT_RESULT;?></span><br/><br/>

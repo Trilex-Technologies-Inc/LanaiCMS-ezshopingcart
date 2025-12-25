@@ -180,17 +180,20 @@
 	    	}
             $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=shipping");
         break;
-       case "paymentnew":
+      case "paymentnew":
     if (empty($_REQUEST['payTitle'])) {
         $sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
     } else {
+        $is_sandbox = isset($_REQUEST['is_sandbox']) ? (int)$_REQUEST['is_sandbox'] : 0;
+
         $ezshop->setPaymentNew(
             $_REQUEST['payTitle'],
             $_REQUEST['payDescription'],
             $_REQUEST['payModule'],
             $_REQUEST['payToken'],
-            isset($_REQUEST['paySecret']) ? $_REQUEST['paySecret'] : '', // added paySecret
-            $_REQUEST['currency']
+            isset($_REQUEST['paySecret']) ? $_REQUEST['paySecret'] : '',
+            $_REQUEST['currency'],
+            $is_sandbox // added sandbox
         );
         $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=payment");
     }
@@ -200,14 +203,17 @@ case "paymentedit":
     if (empty($_REQUEST['payTitle'])) {
         $sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
     } else {
+        $is_sandbox = isset($_REQUEST['is_sandbox']) ? (int)$_REQUEST['is_sandbox'] : 0;
+
         $ezshop->setPaymentEdit(
             $_REQUEST['mid'],
             $_REQUEST['payTitle'],
             $_REQUEST['payDescription'],
             $_REQUEST['payModule'],
             $_REQUEST['payToken'],
-            isset($_REQUEST['paySecret']) ? $_REQUEST['paySecret'] : '', // added paySecret
-            $_REQUEST['currency']
+            isset($_REQUEST['paySecret']) ? $_REQUEST['paySecret'] : '',
+            $_REQUEST['currency'],
+            $is_sandbox // added sandbox
         );
         $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=payment");
     }

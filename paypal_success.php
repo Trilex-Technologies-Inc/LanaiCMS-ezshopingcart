@@ -9,7 +9,7 @@ $ezshop = new EzShop2();
 $payitem = $ezcart->getPaymentMethod($_REQUEST['payId']);
 $PAYPAL_CLIENT_ID = $payitem->fields['payToken'];
 $PAYPAL_SECRET = $payitem->fields['paySecret'];
-$SANDBOX = true;
+$SANDBOX = ($payitem->fields['is_sandbox']) ? true : false;
 
 $orderID = isset($_GET['order_id']) ? $_GET['order_id'] : '';
 $invoice = isset($_GET['invoice']) ? $_GET['invoice'] : '';

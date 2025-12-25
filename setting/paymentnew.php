@@ -98,6 +98,14 @@ This is some <strong>sample text</strong>.
         </select>
     </td>
 </tr>
-
+<tr>
+    <td><?=_SANDBOX_MODE;?></td>
+    <td>
+        <select name="is_sandbox">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+    </td>
+</tr>
 </form>
 </table>

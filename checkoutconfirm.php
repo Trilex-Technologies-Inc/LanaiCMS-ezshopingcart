@@ -8,11 +8,17 @@ $modfunction = "modules/$module_name/module.php";
 include_once($modfunction);
 
 $ezcart = new EzShoppingCart();
+$ezshop = new EzShop2();
+$sbtotal=0;
 if (!$sys_lanai->isUserLogin()) {
     $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=checkputcart");
 }
 ?>
-
+<div class="col-md-12">
+    <?php
+    $ezshop->getMenu(null, null, null);
+    ?>
+</div>
 <div class="col-md-12">
     <div class="article-content bg-white p-4 rounded shadow-sm">
 

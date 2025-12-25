@@ -10,7 +10,7 @@ $modfunction = "modules/$module_name/module.php";
 include_once($modfunction);
 
 $ezcart = new EzShoppingCart();
-
+$ezshop = new EzShop2();
 /* ACTIONS */
 switch ($_REQUEST['ac']) {
     case "add":
@@ -37,6 +37,13 @@ switch ($_REQUEST['ac']) {
 /* GET CART */
 $rs = $ezcart->getProductInCart(0);
 ?>
+<div class="col-md-12">
+
+    <?php
+    $ezshop->getMenu(null, null, null);
+    ?>
+
+</div>
 <div class="col-md-12">
     <div class="article-content bg-white p-4 rounded shadow-sm">
         <h4 class="mb-4"><?= _EZSHOP_YOUR_CART; ?></h4>

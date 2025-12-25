@@ -13,7 +13,12 @@ $cid = isset($_REQUEST['cid']) ? (int)$_REQUEST['cid'] : 0;
 $pcid = isset($_REQUEST['pcid']) ? (int)$_REQUEST['pcid'] : 0;
 $ac = isset($_REQUEST['ac']) ? $_REQUEST['ac'] : '';
 ?>
-<div class="col-md-8">
+<div class="col-md-12">
+<?php
+$ezshop->getMenu($ac, $cid, $pcid);
+?>
+</div>
+<div class="col-md-12">
     <div class="article-content bg-white p-4 rounded shadow-sm">
         <a id="top"></a>
 
@@ -143,10 +148,5 @@ $ac = isset($_REQUEST['ac']) ? $_REQUEST['ac'] : '';
 </div>
 
 
-<div class="col-md-4">
-    <div class="sidebar">
-        <?php
-        $ezshop->getMenu($ac, $cid, $pcid);
-        ?>
-    </div>
-</div>
+
+

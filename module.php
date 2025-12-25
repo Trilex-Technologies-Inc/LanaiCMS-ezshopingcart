@@ -265,23 +265,24 @@ class EzShop2
         $pager->Render($row);
     }
 
-    public function setPaymentNew($payTitle, $payDescription, $payModule, $payToken, $paySecret, $currency)
-    {
+  public function setPaymentNew($payTitle, $payDescription, $payModule, $payToken, $paySecret, $currency, $is_sandbox = 0)
+{
+    $payTitle = $this->db->escape($payTitle);
+    $payDescription = $this->db->escape($payDescription);
+    $payModule = $this->db->escape($payModule);
+    $payToken = $this->db->escape($payToken);
+    $paySecret = $this->db->escape($paySecret);
+    $currency = $this->db->escape($currency);
+    $is_sandbox = ($is_sandbox) ? 1 : 0; 
 
-        $payTitle = $this->db->escape($payTitle);
-        $payDescription = $this->db->escape($payDescription);
-        $payModule = $this->db->escape($payModule);
-        $payToken = $this->db->escape($payToken);
-        $paySecret = $this->db->escape($paySecret);
-        $currency = $this->db->escape($currency);
+    $sql = "INSERT INTO " . $this->cfg['tablepre'] . "ezshop_payment
+    (payTitle, payDescription, payModule, payToken, paySecret, currency, is_sandbox)
+    VALUES ('$payTitle', '$payDescription', '$payModule', '$payToken', '$paySecret', '$currency', $is_sandbox)";
 
-        $sql = "INSERT INTO " . $this->cfg['tablepre'] . "ezshop_payment
-        (payTitle, payDescription, payModule, payToken, paySecret, currency)
-        VALUES ('$payTitle', '$payDescription', '$payModule', '$payToken', '$paySecret', '$currency')";
+    $rs = $this->db->execute($sql);
+    return $rs;
+}
 
-        $rs = $this->db->execute($sql);
-        return $rs;
-    }
 
 
     function setPaymentDelete($mid)
@@ -292,29 +293,31 @@ class EzShop2
         return $rs;
     }
 
-    public function setPaymentEdit($payId, $payTitle, $payDescription, $payModule, $payToken, $paySecret, $currency)
-    {
+  public function setPaymentEdit($payId, $payTitle, $payDescription, $payModule, $payToken, $paySecret, $currency, $is_sandbox = 0)
+{
+    $payId = (int)$payId;
+    $payTitle = $this->db->escape($payTitle);
+    $payDescription = $this->db->escape($payDescription);
+    $payModule = $this->db->escape($payModule);
+    $payToken = $this->db->escape($payToken);
+    $paySecret = $this->db->escape($paySecret);
+    $currency = $this->db->escape($currency);
+    $is_sandbox = ($is_sandbox) ? 1 : 0; 
 
-        $payId = (int)$payId;
-        $payTitle = $this->db->escape($payTitle);
-        $payDescription = $this->db->escape($payDescription);
-        $payModule = $this->db->escape($payModule);
-        $payToken = $this->db->escape($payToken);
-        $paySecret = $this->db->escape($paySecret);
-        $currency = $this->db->escape($currency);
+    $sql = "UPDATE " . $this->cfg['tablepre'] . "ezshop_payment SET
+        payTitle='$payTitle',
+        payDescription='$payDescription',
+        payModule='$payModule',
+        payToken='$payToken',
+        paySecret='$paySecret',
+        currency='$currency',
+        is_sandbox=$is_sandbox
+    WHERE payId=$payId";
 
-        $sql = "UPDATE " . $this->cfg['tablepre'] . "ezshop_payment SET
-            payTitle='$payTitle',
-            payDescription='$payDescription',
-            payModule='$payModule',
-            payToken='$payToken',
-            paySecret='$paySecret',
-            currency='$currency'
-        WHERE payId=$payId";
+    $rs = $this->db->execute($sql);
+    return $rs;
+}
 
-        $rs = $this->db->execute($sql);
-        return $rs;
-    }
 
 
     function setOrderStatus($mid, $state = "P")
@@ -631,48 +634,79 @@ class EzShop2
         <?php
     }
 
-    function getMenu()
-    {
-        $rspcat = $this->getCategoryParent();
-        ?>
-        <div class="container mb-3">
-            <div class="row">
+  function getMenu()
+{
+    $rspcat = $this->getCategoryParent();
+    ?>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3 rounded shadow-sm">
+        <div class="container-fluid">
 
-                    <div class="list-group bg-light rounded shadow-sm">
-                        <a href="module.php?modname=ezshopingcart"
-                           class="list-group-item list-group-item-action fw-bold">
-                            <?= _EZSHOP_HOME; ?>
-                        </a>
-                        <a href="module.php?modname=ezshopingcart&ac=a"
-                           class="list-group-item list-group-item-action fw-bold">
+            <a class="navbar-brand fw-bold" href="module.php?modname=ezshopingcart">
+                <?= _EZSHOP_HOME; ?>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#ezshopNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="ezshopNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <!-- All Categories -->
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold"
+                           href="module.php?modname=ezshopingcart&ac=a">
                             <?= _EZSHOP_ALL_CATEGORY; ?>
                         </a>
+                    </li>
 
-                        <?php while (!$rspcat->EOF): ?>
-                            <a href="module.php?modname=ezshopingcart&ac=c&cid=<?= $rspcat->fields['catId']; ?>"
-                               class="list-group-item list-group-item-action">
+                    <!-- Categories -->
+                    <?php while (!$rspcat->EOF): ?>
+
+                        <?php
+                        $rssub = $this->getSubCategoryByParent($rspcat->fields['catId']);
+                        $hasSub = ($rssub && !$rssub->EOF);
+                        ?>
+
+                        <li class="nav-item <?= $hasSub ? 'dropdown' : ''; ?>">
+
+                            <a class="nav-link <?= $hasSub ? 'dropdown-toggle' : ''; ?>"
+                               href="module.php?modname=ezshopingcart&ac=c&cid=<?= $rspcat->fields['catId']; ?>"
+                               <?= $hasSub ? 'role="button" data-bs-toggle="dropdown"' : ''; ?>>
                                 <?= $rspcat->fields['catTitle']; ?>
                             </a>
 
-                            <?php
-                            $rssub = $this->getSubCategoryByParent($rspcat->fields['catId']);
-                            if ($rssub && !$rssub->EOF):
-                                foreach ($rssub as $sub): ?>
-                                    <a href="module.php?modname=ezshopingcart&ac=c&pcid=<?= $sub['catParentId']; ?>&cid=<?= $sub['catId']; ?>"
-                                       class="list-group-item list-group-item-action ps-4 text-muted">
-                                        — <?= $sub['catTitle']; ?>
-                                    </a>
-                                <?php endforeach;
-                            endif;
+                            <?php if ($hasSub): ?>
+                                <ul class="dropdown-menu">
 
-                            $rspcat->movenext();
-                        endwhile; ?>
-                    </div>
-                </div>
+                                    <?php foreach ($rssub as $sub): ?>
+                                        <li>
+                                            <a class="dropdown-item"
+                                               href="module.php?modname=ezshopingcart&ac=c&pcid=<?= $sub['catParentId']; ?>&cid=<?= $sub['catId']; ?>">
+                                                <?= $sub['catTitle']; ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+
+                                </ul>
+                            <?php endif; ?>
+
+                        </li>
+
+                        <?php
+                        $rspcat->movenext();
+                        endwhile;
+                        ?>
+
+                </ul>
+            </div>
 
         </div>
-        <?php
-    }
+    </nav>
+    <?php
+}
+
 
 
 
