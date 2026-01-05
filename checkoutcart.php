@@ -46,7 +46,7 @@ if (!empty($_REQUEST['ac']) && $_REQUEST['ac'] == "login") {
 
     <p class="mb-3"><?=_EZSHOP_LOGIN_INSTRUCTION; ?></p>
 
-    <form action="module.php" method="POST" class="card p-4 col-md-5">
+    <form action="module.php" method="POST" class="card p-4 col-md-12">
         <input type="hidden" name="modname" value="<?=$module_name; ?>">
         <input type="hidden" name="mf" value="checkoutcart">
         <input type="hidden" name="ac" value="login">
