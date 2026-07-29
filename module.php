@@ -15,13 +15,12 @@ class EzShop2
     var $_sql;
     var $version = "0.2";
 
-    function EzShop2()
+    public function __construct()
     {
         global $db, $cfg;
         $this->db = $db;
         $this->cfg = $cfg;
-        if (!empty($_SESSION['uid']))
-            $this->uid = $_SESSION['uid'];
+        $this->uid = $_SESSION['uid'] ?? null;
     }
 
     function getProductItem($cid = 0)

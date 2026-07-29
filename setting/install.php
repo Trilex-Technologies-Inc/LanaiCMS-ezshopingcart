@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if ( stripos($_SERVER['PHP_SELF'], "setting.php") === false ) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -12,12 +12,12 @@
 ?>
 <span class="txtContentTitle">Install</span><br/><br/>
 <OL>
-<?
+<?php
 	global $cfg,$db;
 	switch($_REQUEST['step']){
 		case "1": 			
 			// create nessary tables
-			?><LI>Create Table <?=$cfg['tablepre']."ezshop_product_item" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."ezshop_product_item" ?> <?php
 			
 			// create table script
 			//$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."ezshop_product_item";
@@ -37,12 +37,12 @@
 			$rs1=$db->execute($sql);
 			
 			if (empty($rs1)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 					
-			?><LI>Create Table <?=$cfg['tablepre']."ezshop_category" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."ezshop_category" ?> <?php
 			//$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."ezshop_category";
 			//$db->execute($sql);
 			$sql="CREATE TABLE IF NOT EXISTS ".$cfg['tablepre']."ezshop_category (
@@ -56,12 +56,12 @@
 			$rs2=$db->execute($sql);
 			
 			if (empty($rs2)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 			
-			?><LI>Create Table <?=$cfg['tablepre']."ezshop_showcase" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."ezshop_showcase" ?> <?php
 			//$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."ezshop_showcase";
 			//$db->execute($sql);
 			$sql="CREATE TABLE IF NOT EXISTS ".$cfg['tablepre']."ezshop_showcase (
@@ -72,12 +72,12 @@
 			$rs3=$db->execute($sql);
 			
 			if (empty($rs3)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 
-			?><LI>Create Table <?=$cfg['tablepre']."ezshop_showcase_config" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."ezshop_showcase_config" ?> <?php
 			//$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."ezshop_showcase_config";
 			//$db->execute($sql);
 			$sql="CREATE TABLE IF NOT EXISTS ".$cfg['tablepre']."ezshop_showcase_config (
@@ -98,12 +98,12 @@
 			$db->execute($sql);
 			
 			if (empty($rs4)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 
-			?><LI>Create Table <?=$cfg['tablepre']."ezshop_cart_item" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."ezshop_cart_item" ?> <?php
 			//$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."ezshop_showcase";
 			//$db->execute($sql);
 			$sql="CREATE TABLE IF NOT EXISTS ".$cfg['tablepre']."ezshop_cart_item (
@@ -115,12 +115,12 @@
 						)";
 			$rs5=$db->execute($sql);			
 			if (empty($rs5)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 
-			?><LI>Create Table <?=$cfg['tablepre']."ezshop_cart" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."ezshop_cart" ?> <?php
 			//$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."ezshop_showcase";
 			//$db->execute($sql);
 			$sql="CREATE TABLE IF NOT EXISTS ".$cfg['tablepre']."ezshop_cart (
@@ -136,12 +136,12 @@
 						)";
 			$rs6=$db->execute($sql);			
 			if (empty($rs6)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 
-			?><LI>Create Table <?=$cfg['tablepre']."ezshop_shipping" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."ezshop_shipping" ?> <?php
 			//$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."ezshop_showcase";
 			//$db->execute($sql);
 			$sql="CREATE TABLE IF NOT EXISTS ".$cfg['tablepre']."ezshop_shipping (
@@ -156,12 +156,12 @@
 						)";
 			$rs7=$db->execute($sql);			
 			if (empty($rs7)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 
-			?><LI>Create Table <?=$cfg['tablepre']."ezshop_payment" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."ezshop_payment" ?> <?php
 			//$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."ezshop_showcase";
 			//$db->execute($sql);
 			$sql="CREATE TABLE IF NOT EXISTS ".$cfg['tablepre']."ezshop_payment (
@@ -178,13 +178,13 @@
 							)";
 			$rs8=$db->execute($sql);			
 			if (empty($rs8)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 			
 			if ((!empty($rs1)) AND (!empty($rs2)) AND (!empty($rs3)) AND (!empty($rs4))  AND (!empty($rs5))  AND (!empty($rs6))   AND (!empty($rs7))   AND (!empty($rs8)) ) {
-				?><br><br><input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';"><?
+				?><br><br><input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';"><?php
 			}
 			
 			break;
@@ -212,7 +212,7 @@
 			// select module data
 			$sql="SELECT MAX(modOrder) FROM ".$cfg['tablepre']."module ";
 			$rsOModule=$db->execute($sql);
-			?><LI>Create module data<?
+			?><LI>Create module data<?php
 			// create module data
 			$sql="INSERT INTO ".$cfg['tablepre']."module 
 					(modTitle,modName,modActive,modOrder,modSetting) 
@@ -225,43 +225,43 @@
 			// select module data
 			$sql="SELECT MAX(mnuOrder) FROM ".$cfg['tablepre']."menu ";
 			$rsOMenu=$db->execute($sql);
-			?><LI>Create menu data<?
+			?><LI>Create menu data<?php
 			// create menu data
 			$sql="INSERT INTO ".$cfg['tablepre']."menu 
 					(mnuParentId,mnuTitle,modId,mnuType,mnuActive,mnuOrder)
 					VALUES (0,'EzShopingCart',".$rsIModule->fields[1].",'m','y',".(($rsOMenu->fields[0])+1).")";
 			$rs2=$db->execute($sql);	
-			?><LI>Create privilege data<?
+			?><LI>Create privilege data<?php
 			// create privilege data
 			$sql="INSERT INTO ".$cfg['tablepre']."privilege 
 					(modAccess,modId,userPrivilege)
 					VALUES ('y',".$rsIModule->fields[1].",'a')";
 			$rs3=$db->execute($sql);			
 			if ((!empty($rs1)) AND (!empty($rs2)) AND (!empty($rs3))) {
-				?><br><br><input type="button" class="inputButton" value="Install Complete Click to Setting" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>';"><?
+				?><br><br><input type="button" class="inputButton" value="Install Complete Click to Setting" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>';"><?php
 			}
 			break;
 		default:
 			// check nessary environment			
 			// 1 check safe mode
-			?><LI>PHP Safe Mode is <?
+			?><LI>PHP Safe Mode is <?php
 			if (ini_get('safe_mode')) {
-			    ?><span style="color:green;">ON</span><?
+			    ?><span style="color:green;">ON</span><?php
 			} else {
-				?><span style="color:red;">OFF</span><?
+				?><span style="color:red;">OFF</span><?php
 			}
 			// 2 check dir exist
 			?> 
 			<LI>Module Directory & EzShop Data Directory is 
-			<?
+			<?php
 			
 			if ((is_writable($cfg['dir'].$sys_lanai->getPath()."modules")) AND (is_writable($cfg['dir'].$sys_lanai->getPath()."modules"))  AND (is_writable($cfg['datadir'].$sys_lanai->getPath()."ezshop")) ) {
 				?>
 				<span style="color:green;">WRITABLE</span><br/><br/>
 				<input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=1';">
-				<?
+				<?php
 			} else {
-				?><span style="color:red;">NOT WRITABLE</span>, please change permission in <span style="color:red;">'modules'</span> and create <span style="color:red;">'datacenter/ezshop'</span> and change its permission<?
+				?><span style="color:red;">NOT WRITABLE</span>, please change permission in <span style="color:red;">'modules'</span> and create <span style="color:red;">'datacenter/ezshop'</span> and change its permission<?php
 			}
 			
 	} // switch

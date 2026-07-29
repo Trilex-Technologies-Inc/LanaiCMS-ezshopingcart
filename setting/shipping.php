@@ -1,6 +1,6 @@
 <?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if ( stripos($_SERVER['PHP_SELF'], "setting.php") === false ) {
 	    die ( "You can't access this file directly..." );
 	}
 
@@ -44,7 +44,7 @@
 		}
 	//-->
     </script>
-<?
+<?php
 	$ezshop->getShippingList();
 
 ?>

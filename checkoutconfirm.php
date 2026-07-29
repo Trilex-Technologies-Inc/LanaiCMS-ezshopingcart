@@ -1,5 +1,5 @@
-<?
-if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+<?php
+if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
     die ("You can't access this file directly...");
 }
 
@@ -23,7 +23,7 @@ if (!$sys_lanai->isUserLogin()) {
     <div class="article-content bg-white p-4 rounded shadow-sm">
 
 
-        <? if (!$sys_lanai->isUserLogin()) { ?>
+        <?php if (!$sys_lanai->isUserLogin()) { ?>
 
             <p class="mb-3"><?=_EZSHOP_LOGIN_INSTRUCTION; ?></p>
 
@@ -57,13 +57,13 @@ if (!$sys_lanai->isUserLogin()) {
                 </button>
             </form>
 
-        <? } else { ?>
+        <?php } else { ?>
 
             <!-- SHIPPING ADDRESS -->
             <h5 class="mb-3"><?=_EZSHOP_SHIPPING_TO; ?></h5>
             <p><?=_EZSHOP_SHIPPING_TO_INSTRUCTION; ?></p>
 
-            <? $rsmember = $ezcart->getMemberInfo(); ?>
+            <?php $rsmember = $ezcart->getMemberInfo(); ?>
 
             <div class="card mb-4">
                 <div class="card-body">
@@ -81,10 +81,10 @@ if (!$sys_lanai->isUserLogin()) {
             <!-- CART SUMMARY -->
             <h5 class="mb-3"><?=_EZSHOP_CART; ?></h5>
 
-            <? $rs = $ezcart->getProductInCart(0); ?>
+            <?php $rs = $ezcart->getProductInCart(0); ?>
 
             <div class="list-group mb-4">
-                <? while (!$rs->EOF) {
+                <?php while (!$rs->EOF) {
                     $rspitem = $ezcart->getProductItem($rs->fields['prdId']);
                     $amount = $rs->fields['prdPrice'] * $rs->fields['crtQuantity'];
                     $sbtotal += $amount;
@@ -99,7 +99,7 @@ if (!$sys_lanai->isUserLogin()) {
                             <strong><?=$amount; ?></strong>
                         </div>
                     </div>
-                    <? $rs->movenext(); } ?>
+                    <?php $rs->movenext(); } ?>
             </div>
 
             <div class="text-end mb-4">
@@ -113,8 +113,8 @@ if (!$sys_lanai->isUserLogin()) {
 
                 <!-- SHIPPING METHOD -->
                 <h5 class="mb-3"><?=_EZSHOP_SHIPPING_METHOD; ?></h5>
-                <? $rsship = $ezcart->getShippingMethod(); ?>
-                <? while (!$rsship->EOF) { ?>
+                <?php $rsship = $ezcart->getShippingMethod(); ?>
+                <?php while (!$rsship->EOF) { ?>
                     <div class="form-check mb-2">
                         <input class="form-check-input" type="radio"
                                name="shpId" value="<?=$rsship->fields['shpId']; ?>" checked>
@@ -123,12 +123,12 @@ if (!$sys_lanai->isUserLogin()) {
                             <?=$rsship->fields['shpDescription']; ?>
                         </label>
                     </div>
-                    <? $rsship->movenext(); } ?>
+                    <?php $rsship->movenext(); } ?>
 
                 <!-- PAYMENT METHOD -->
                 <h5 class="mt-4 mb-3"><?=_EZSHOP_PAYMENT_METHOD; ?></h5>
-                <? $rspay = $ezcart->getPaymentMethod(); ?>
-                <? while (!$rspay->EOF) { ?>
+                <?php $rspay = $ezcart->getPaymentMethod(); ?>
+                <?php while (!$rspay->EOF) { ?>
                     <div class="form-check mb-2">
                         <input class="form-check-input" type="radio"
                                name="payId" value="<?=$rspay->fields['payId']; ?>" checked>
@@ -137,7 +137,7 @@ if (!$sys_lanai->isUserLogin()) {
                             <?=$rspay->fields['payDescription']; ?>
                         </label>
                     </div>
-                    <? $rspay->movenext(); } ?>
+                    <?php $rspay->movenext(); } ?>
 
                 <!-- REMARK -->
                 <h5 class="mt-4"><?=_EZSHOP_REMARK; ?></h5>
@@ -149,7 +149,7 @@ if (!$sys_lanai->isUserLogin()) {
                         <?=_BACK2CART; ?>
                     </button>
 
-                    <? if (
+                    <?php if (
                         !empty($rsmember->fields['userAddress1']) &&
                         !empty($rsmember->fields['userCity']) &&
                         !empty($rsmember->fields['userState']) &&
@@ -158,11 +158,11 @@ if (!$sys_lanai->isUserLogin()) {
                         <button type="submit" class="btn btn-success">
                             <?=_CHECKOUT_PROCEED; ?>
                         </button>
-                    <? } ?>
+                    <?php } ?>
                 </div>
             </form>
 
-        <? } // logged in ?>
+        <?php } // logged in ?>
 
     </div>
 
@@ -170,7 +170,7 @@ if (!$sys_lanai->isUserLogin()) {
 <h5 class="mb-3"><?=_EZSHOP_SHIPPING_TO; ?></h5>
 <p class="text-muted"><?=_EZSHOP_SHIPPING_TO_INSTRUCTION; ?></p>
 
-<? $rsmember = $ezcart->getMemberInfo(); ?>
+<?php $rsmember = $ezcart->getMemberInfo(); ?>
 
 <div class="card mb-4">
     <div class="card-body p-0">
@@ -189,7 +189,7 @@ if (!$sys_lanai->isUserLogin()) {
     </div>
 </div>
 
-<?
+<?php
 
 $rs = $ezcart->getProductInCart(0);
 $sbtotal = 0;
@@ -209,7 +209,7 @@ $tqty = 0;
         </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     while (!$rs->EOF) {
         $rspitem = $ezcart->getProductItem($rs->fields['prdId']);
         $qty = $rs->fields['crtQuantity'];
@@ -225,7 +225,7 @@ $tqty = 0;
             <td class="text-end"><?=$price; ?></td>
             <td class="text-end"><?=$amount; ?></td>
         </tr>
-    <?
+    <?php
         $rs->movenext();
     }
     ?>
@@ -238,14 +238,14 @@ $tqty = 0;
         <tr>
             <th colspan="3" class="text-end"><?=_SHIPPING; ?></th>
             <th class="text-end">
-                <? $shpcost = $ezcart->getShippingCost($_REQUEST['shpId'], $tqty); ?>
+                <?php $shpcost = $ezcart->getShippingCost($_REQUEST['shpId'], $tqty); ?>
                 <?=sprintf("%01.2f", $shpcost); ?>
             </th>
         </tr>
         <tr>
             <th colspan="3" class="text-end"><?=_TOTAL; ?></th>
             <th class="text-end fw-bold">
-                <? $amt = $sbtotal + $shpcost; ?>
+                <?php $amt = $sbtotal + $shpcost; ?>
                 <?=sprintf("%01.2f", $amt); ?>
             </th>
         </tr>
@@ -266,7 +266,7 @@ function checkoutcart() {
 <input type="hidden" name="amt" value="<?=$amt; ?>">
 <input type="hidden" name="clrcook" value="clear">
 
-<?
+<?php
 // ================== SHIPPING METHOD ==================
 $rsship = $ezcart->getShippingMethod($_REQUEST['shpId']);
 ?>
@@ -286,7 +286,7 @@ $rsship = $ezcart->getShippingMethod($_REQUEST['shpId']);
     </div>
 </div>
 
-<?
+<?php
 
 $rspay = $ezcart->getPaymentMethod($_REQUEST['payId']);
 ?>

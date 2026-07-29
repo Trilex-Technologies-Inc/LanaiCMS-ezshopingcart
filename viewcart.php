@@ -1,5 +1,5 @@
-<?
-if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+<?php
+if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
     die ("You can't access this file directly...");
 }
 
@@ -85,8 +85,8 @@ $rs = $ezcart->getProductInCart(0);
                     <div class="col-2 text-end"><?= _AMOUNT; ?></div>
                 </div>
 
-                <? while (!$rs->EOF) { ?>
-                    <?
+                <?php while (!$rs->EOF) { ?>
+                    <?php
                     $rspitem = $ezcart->getProductItem($rs->fields['prdId']);
                     $amount = $rs->fields['prdPrice'] * $rs->fields['crtQuantity'];
                     $sbtotal += $amount;
@@ -114,10 +114,10 @@ $rs = $ezcart->getProductInCart(0);
                             <?= $amount; ?>
                         </div>
                     </div>
-                    <? $rs->movenext(); ?>
-                <? } ?>
+                    <?php $rs->movenext(); ?>
+                <?php } ?>
 
-                <? if ($rs->recordcount() > 0) { ?>
+                <?php if ($rs->recordcount() > 0) { ?>
                     <div class="row mt-4 align-items-center">
                         <div class="col-md-6 mb-2">
                             <button type="button" class="btn btn-outline-secondary btn-sm"
@@ -142,7 +142,7 @@ $rs = $ezcart->getProductInCart(0);
                             </button>
                         </div>
                     </div>
-                <? } ?>
+                <?php } ?>
             </div>
 
         </form>

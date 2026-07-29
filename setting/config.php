@@ -1,6 +1,6 @@
-<?
+<?php
 
-if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
     die("You can't access this file directly...");
 }
 
@@ -37,7 +37,7 @@ $checkdbp_yes = $checkdbp_no = "";
 
         <tr>
             <td><?=_TITLE_IN_SHOWCASE; ?></td>
-            <?
+            <?php
             if ($rsconfig->fields['cfgTitleInShowcase'] == 'y') $check_yes = "checked";
             else if ($rsconfig->fields['cfgTitleInShowcase'] == 'n') $check_no = "checked";
             ?>
@@ -49,7 +49,7 @@ $checkdbp_yes = $checkdbp_no = "";
 
         <tr>
             <td><?=_DESCRIPTION_IN_SHOWCASE; ?></td>
-            <?
+            <?php
             if ($rsconfig->fields['cfgDescriptionInShowcase'] == 'y') $checkd_yes = "checked";
             else if ($rsconfig->fields['cfgDescriptionInShowcase'] == 'n') $checkd_no = "checked";
             ?>
@@ -61,7 +61,7 @@ $checkdbp_yes = $checkdbp_no = "";
 
         <tr>
             <td><?=_PRICE_IN_SHOWCASE; ?></td>
-            <?
+            <?php
             if ($rsconfig->fields['cfgPriceInShowcase'] == 'y') $checkp_yes = "checked";
             else if ($rsconfig->fields['cfgPriceInShowcase'] == 'n') $checkp_no = "checked";
             ?>
@@ -73,7 +73,7 @@ $checkdbp_yes = $checkdbp_no = "";
 
         <tr>
             <td><?=_BESTPRICE_IN_SHOWCASE; ?></td>
-            <?
+            <?php
             if ($rsconfig->fields['cfgBestPriceInShowcase'] == 'y') $checkbp_yes = "checked";
             else if ($rsconfig->fields['cfgBestPriceInShowcase'] == 'n') $checkbp_no = "checked";
             ?>
@@ -85,7 +85,7 @@ $checkdbp_yes = $checkdbp_no = "";
 
         <tr>
             <td><?=_TITLE_IN_DETAIL; ?></td>
-            <?
+            <?php
             if ($rsconfig->fields['cfgTitleInDetail'] == 'y') $checkdt_yes = "checked";
             else if ($rsconfig->fields['cfgTitleInDetail'] == 'n') $checkdt_no = "checked";
             ?>
@@ -97,7 +97,7 @@ $checkdbp_yes = $checkdbp_no = "";
 
         <tr>
             <td><?=_DESCRIPTION_IN_DETAIL; ?></td>
-            <?
+            <?php
             if ($rsconfig->fields['cfgDescriptionInDetail'] == 'y') $checkdd_yes = "checked";
             else if ($rsconfig->fields['cfgDescriptionInDetail'] == 'n') $checkdd_no = "checked";
             ?>
@@ -109,7 +109,7 @@ $checkdbp_yes = $checkdbp_no = "";
 
         <tr>
             <td><?=_PRICE_IN_DETAIL; ?></td>
-            <?
+            <?php
             if ($rsconfig->fields['cfgPriceInDetail'] == 'y') $checkdp_yes = "checked";
             else if ($rsconfig->fields['cfgPriceInDetail'] == 'n') $checkdp_no = "checked";
             ?>
@@ -121,7 +121,7 @@ $checkdbp_yes = $checkdbp_no = "";
 
         <tr>
             <td><?=_BESTPRICE_IN_DETAIL; ?></td>
-            <?
+            <?php
             if ($rsconfig->fields['cfgBestPriceInDetail'] == 'y') $checkdbp_yes = "checked";
             else if ($rsconfig->fields['cfgBestPriceInDetail'] == 'n') $checkdbp_no = "checked";
             ?>

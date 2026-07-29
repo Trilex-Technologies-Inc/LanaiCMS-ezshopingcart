@@ -1,4 +1,4 @@
-<?
+<?php
 
 ### EzShoping Cart ###
 if (empty($_COOKIE['cartref'])) {

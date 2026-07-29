@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if ( stripos($_SERVER['PHP_SELF'], "setting.php") === false ) {
 	    die ( "You can't access this file directly..." );
 	}
 
@@ -123,14 +123,14 @@ function selectAllOptions(selStr)
     </tr>
     <tr>
     <td>
-        <?
+        <?php
             $avList=array();
             $rsSelected=$ezshop->getProductShowcase();
         ?>
         <select id="selectedOptions" name="selectedOptions" size="10" multiple="multiple" style="width: 200px;">
-        <?
+        <?php
             while (!$rsSelected->EOF) {
-                ?><option value="<?=$rsSelected->fields['prdId']; ?>"><?=$rsSelected->fields['prdTitle']; ?></option><?
+                ?><option value="<?=$rsSelected->fields['prdId']; ?>"><?=$rsSelected->fields['prdTitle']; ?></option><?php
             array_push($avList,$rsSelected->fields['prdId']);
             $rsSelected->movenext();
          }
@@ -142,13 +142,13 @@ function selectAllOptions(selStr)
 		<input type="button" class="inputButton" onclick="moveOptions(document.getElementById('selectedOptions'), document.getElementById('availableOptions'));" value="--&gt;"><br/>
     </td>
     <td>
-         <?
+         <?php
                $rsAvailable=$ezshop->getProductAvailable($avList);
          ?>
         <select id="availableOptions" name="availableOptions" size="10" multiple="multiple" style="width: 200px;">
-        <?
+        <?php
             while (!$rsAvailable->EOF) {
-                ?><option value="<?=$rsAvailable->fields['prdId']; ?>"><?=$rsAvailable->fields['prdTitle']; ?></option><?
+                ?><option value="<?=$rsAvailable->fields['prdId']; ?>"><?=$rsAvailable->fields['prdTitle']; ?></option><?php
               $rsAvailable->movenext();
          }
          ?>

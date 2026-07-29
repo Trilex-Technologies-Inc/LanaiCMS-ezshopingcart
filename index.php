@@ -1,5 +1,5 @@
-<?
-if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+<?php
+if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
     die("You can't access this file directly...");
 }
 
@@ -38,7 +38,7 @@ $ezshop->getMenu($ac, $cid, $pcid);
                     <hr class="mb-4">
 
 
-                    <?
+                    <?php
                     $rsshconfig = $ezshop->getShowcaseConfig();
                     $ezshop->showItem(
                         $ezshop->getProductInCategory($cid),
@@ -52,7 +52,7 @@ $ezshop->getMenu($ac, $cid, $pcid);
                             <?= _GOTOP; ?> ↑
                         </a>
                     </div>
-                    <?
+                    <?php
                 } else {
                     echo '<div class="row"></div>';
 
@@ -85,7 +85,7 @@ $ezshop->getMenu($ac, $cid, $pcid);
                         </a>
                     </div>
 
-                    <?
+                    <?php
                     $rssub = $ezshop->getSubCategoryByParent($rspcat->fields['catId']);
                     if ($rssub->recordcount() > 0) {
                         while (!$rssub->EOF) {
@@ -107,7 +107,7 @@ $ezshop->getMenu($ac, $cid, $pcid);
                                     <?= _GOTOP; ?> ↑
                                 </a>
                             </div>
-                            <?
+                            <?php
                             $rssub->movenext();
                         }
                     }
@@ -140,7 +140,7 @@ $ezshop->getMenu($ac, $cid, $pcid);
                     </a>
                 </div>
 
-            <?
+            <?php
         }
         ?>
 

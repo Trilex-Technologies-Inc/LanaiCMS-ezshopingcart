@@ -127,7 +127,7 @@
                 <th class="tblRowSolidTopDown" width="50"><?=_STATUS; ?></th>
 				<!--<th class="tblRowSolidTopDown"><?=_EDIT; ?></th>-->
 			</tr>
-			<?
+			<?php
 			while(!$this->rs->EOF){
 			?>
 			<tr>
@@ -149,15 +149,15 @@
                     &nbsp;
                 </td>
                 <td class="tblRowDash" align="center">
-                    <?
+                    <?php
                         if ($this->rs->fields['crtStatus']=='c') {
-                            ?><span style="color:red; font-weight: bold;" >&nbsp;<?=strtoupper(_ST_CANCEL); ?>&nbsp;</span><?
+                            ?><span style="color:red; font-weight: bold;" >&nbsp;<?=strtoupper(_ST_CANCEL); ?>&nbsp;</span><?php
                         } else if ($this->rs->fields['crtStatus']=='p') {
-                            ?><span style="color:blue; font-weight: bold;" >&nbsp;<?=strtoupper(_ST_PANDING); ?>&nbsp;</span><?
+                            ?><span style="color:blue; font-weight: bold;" >&nbsp;<?=strtoupper(_ST_PANDING); ?>&nbsp;</span><?php
                         } else if ($this->rs->fields['crtStatus']=='t') {
-                            ?><span style="color:magenta; font-weight: bold;" >&nbsp;<?=strtoupper(_ST_PAYRECIEVED); ?>&nbsp;</span><?
+                            ?><span style="color:magenta; font-weight: bold;" >&nbsp;<?=strtoupper(_ST_PAYRECIEVED); ?>&nbsp;</span><?php
                         } else if ($this->rs->fields['crtStatus']=='s') {
-                            ?><span style="color:green; font-weight: bold;" >&nbsp;<?=strtoupper(_ST_SHIPPED); ?>&nbsp;</span><?
+                            ?><span style="color:green; font-weight: bold;" >&nbsp;<?=strtoupper(_ST_SHIPPED); ?>&nbsp;</span><?php
                         }
 
                     ?>
@@ -170,10 +170,10 @@
 				</td>
             -->
 			</tr>
-			<?
+			<?php
 				$this->rs->movenext();
 			} // while
-			?></table><?
+			?></table><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

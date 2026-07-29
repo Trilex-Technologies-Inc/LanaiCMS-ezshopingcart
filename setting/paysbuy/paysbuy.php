@@ -1,4 +1,4 @@
-<?
+<?php
     $psbuy_email="anoochit@gmail.com";
 
 ?>

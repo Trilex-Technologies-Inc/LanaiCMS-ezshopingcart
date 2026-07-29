@@ -1,4 +1,4 @@
-<?
+<?php
 
     class EzShoppingCart extends EzShop2 {
 
@@ -6,15 +6,16 @@
 		var $db;
 		var $cfg;
 		var $_sql;
+		var $cartref;
 
 
-		function EzShoppingCart () {
+		public function __construct() {
 			global $db,$cfg;
 			$this->db=$db;
 			$this->cfg=$cfg;
 			$this->uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : null;
 
-$this->cartref = isset($_COOKIE['cartref']) ? $_COOKIE['cartref'] : null;
+			$this->cartref = isset($_COOKIE['cartref']) ? $_COOKIE['cartref'] : null;
 			//$this->db->debug=true;
 		}
 

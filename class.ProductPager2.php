@@ -126,7 +126,7 @@
 				<th class="tblRowSolidTopDown"><?=_ACTIVE; ?></th>
 				<th class="tblRowSolidTopDown"><?=_EDIT; ?></th>
 			</tr>
-			<?
+			<?php
 			while(!$this->rs->EOF){
 			?>
 			<tr>
@@ -138,28 +138,28 @@
 					<?=$this->rs->fields['prdTitle']; ?>
 				</td>
                 <td class="tblRowDash">
-                    <?
+                    <?php
                         if ($this->rs->fields['catId'] > 0) {
                             $rsparent=$mod_lanai->getCategoryItem($this->rs->fields['catId']);
-                            ?><?=$rsparent->fields['catTitle']; ?><?
+                            ?><?=$rsparent->fields['catTitle']; ?><?php
                         }
                     ?>
                     &nbsp;
                 </td>
 				<td class="tblRowDash" align="center">
-				<?
+				<?php
 					if ($this->rs->fields['prdActive']=='y') {
 					    ?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=ezedit&v=n&ac=active&mid=<?=$this->rs->fields['prdId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					} else {
 						?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=ezedit&v=y&ac=active&mid=<?=$this->rs->fields['prdId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					}
 				?>					
 				</td>
@@ -169,10 +169,10 @@
 					</a>
 				</td>
 			</tr>
-			<?
+			<?php
 				$this->rs->movenext();
 			} // while
-			?></table><?
+			?></table><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

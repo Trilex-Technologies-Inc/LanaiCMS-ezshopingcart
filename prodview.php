@@ -1,5 +1,5 @@
-<?
-if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+<?php
+if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
     die ("You can't access this file directly...");
 }
 
@@ -31,11 +31,11 @@ $rsshconfig = $ezshop->getShowcaseConfig();
 </div>
 <div class="col-md-12">
     <div class="article-content bg-white p-4 rounded shadow-sm">
-        <? $ezshop->getJumpBox("c", $rs->fields['catId'], 0, $rs->fields['prdTitle']); ?>
+        <?php $ezshop->getJumpBox("c", $rs->fields['catId'], 0, $rs->fields['prdTitle']); ?>
 
         <!-- PRODUCT IMAGES -->
         <div class="col-md-5 text-center mb-4">
-            <?
+            <?php
             if (file_exists($ezshop->cfg['datadir'].$sys_lanai->getPath()."ezshop".$sys_lanai->getPath()."img_".$rs->fields['prdId']."_big1.jpg")) {
                 $imgname1 = "datacenter/ezshop/img_".$rs->fields['prdId']."_big1.jpg";
                 $imgname2 = "datacenter/ezshop/img_".$rs->fields['prdId']."_big2.jpg";
@@ -49,7 +49,7 @@ $rsshconfig = $ezshop->getShowcaseConfig();
                  class="img-fluid mb-3"
                  alt="<?= htmlspecialchars($rs->fields['prdTitle']); ?>">
 
-            <? if (!empty($imgname2) && file_exists($ezshop->cfg['datadir'].$sys_lanai->getPath()."ezshop".$sys_lanai->getPath()."img_".$rs->fields['prdId']."_big2.jpg")) { ?>
+            <?php if (!empty($imgname2) && file_exists($ezshop->cfg['datadir'].$sys_lanai->getPath()."ezshop".$sys_lanai->getPath()."img_".$rs->fields['prdId']."_big2.jpg")) { ?>
                 <div class="d-flex justify-content-center gap-2">
                     <span class="me-2"><?= _EZSHOP_CLICK2SEE; ?></span>
                     <a href="javascript:setimage('<?= $imgname1; ?>');">
@@ -59,45 +59,45 @@ $rsshconfig = $ezshop->getShowcaseConfig();
                         <img src="<?= $imgname2; ?>" class="img-thumbnail" width="50">
                     </a>
                 </div>
-            <? } ?>
+            <?php } ?>
         </div>
 
         <!-- PRODUCT INFO -->
         <div class="col-md-7">
             <h4 class="fw-bold"><?= $rs->fields['prdTitle']; ?></h4>
 
-            <? if ($rsshconfig->fields['cfgDescriptionInDetail'] == 'y') { ?>
+            <?php if ($rsshconfig->fields['cfgDescriptionInDetail'] == 'y') { ?>
                 <div class="mt-3">
                     <?= $rs->fields['prdDescription']; ?>
                 </div>
-            <? } ?>
+            <?php } ?>
 
             <!-- ADD TO CART CARD -->
             <div class="card mt-4">
                 <div class="card-body">
 
-                    <? if ($rsshconfig->fields['cfgPriceInDetail'] == 'y') { ?>
+                    <?php if ($rsshconfig->fields['cfgPriceInDetail'] == 'y') { ?>
                         <p class="fw-bold mb-1">
                             <?= _PRICE; ?>
-                            <? if ($rsshconfig->fields['cfgBestPriceInDetail'] == 'y') { ?>
+                            <?php if ($rsshconfig->fields['cfgBestPriceInDetail'] == 'y') { ?>
                                 <s class="text-muted">
                                     <?= $rsshconfig->fields['cfgCurrencySymbol']; ?>
                                     <?= number_format($rs->fields['prdPrice'], 2); ?>
                                 </s>
-                            <? } else { ?>
+                            <?php } else { ?>
                                 <?= $rsshconfig->fields['cfgCurrencySymbol']; ?>
                                 <?= number_format($rs->fields['prdPrice'], 2); ?>
-                            <? } ?>
+                            <?php } ?>
                         </p>
-                    <? } ?>
+                    <?php } ?>
 
-                    <? if ($rsshconfig->fields['cfgBestPriceInDetail'] == 'y') { ?>
+                    <?php if ($rsshconfig->fields['cfgBestPriceInDetail'] == 'y') { ?>
                         <p class="text-danger fw-bold">
                             <?= _BESTPRICE; ?>
                             <?= $rsshconfig->fields['cfgCurrencySymbol']; ?>
                             <?= number_format($rs->fields['prdBestPrice'], 2); ?>
                         </p>
-                    <? } ?>
+                    <?php } ?>
 
                     <form name="addcart" action="<?= $_SERVER['PHP_SELF']; ?>" method="POST" class="row g-2 align-items-center mt-3">
                         <input type="hidden" name="modname" value="<?= $module_name; ?>">
