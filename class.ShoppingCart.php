@@ -82,6 +82,7 @@
             if (empty($mid)) {
                 $sql="SELECT * FROM ".$this->cfg['tablepre']."ezshop_shipping";
             } else {
+                $mid = (int) $mid;
                 $sql="SELECT * FROM ".$this->cfg['tablepre']."ezshop_shipping
                         WHERE shpId=$mid ";
             }
@@ -92,6 +93,7 @@
              if (empty($mid)) {
                 $sql="SELECT * FROM ".$this->cfg['tablepre']."ezshop_payment";
              } else {
+                $mid = (int) $mid;
                 $sql="SELECT * FROM ".$this->cfg['tablepre']."ezshop_payment
                         WHERE payId=$mid ";
             }
@@ -103,7 +105,10 @@
     $cost = 0;
     $ow   = 0;
 
-    $shpitem = $this->getShippingMethod($shpId);
+	    $shpitem = $this->getShippingMethod($shpId);
+	    if ($shpitem === false || $shpitem->EOF) {
+	        return 0;
+	    }
 
     switch ($shpitem->fields['shpRateType']) {
 
@@ -140,16 +145,23 @@
 
 
         function setCartSave($crtref,$shpid,$payid,$remark) {
+	        $shpid = (int) $shpid;
+	        $payid = (int) $payid;
+	        $crtref = $this->db->qstr((string) $crtref);
+	        $remark = $this->db->qstr((string) $remark);
+	        if ($shpid < 1 || $payid < 1) return false;
             $sql="INSERT INTO ".$this->cfg['tablepre']."ezshop_cart
                     (crtSession, userId, shpId, payId, crtStatus, crtRemark, crtCreate)
-                    VALUES ('".$crtref."',".$this->uid.",".$shpid.",".$payid.",'p','".$remark."',NOW())";
-            $this->db->execute($sql);
+                    VALUES (".$crtref.",".(int) $this->uid.",".$shpid.",".$payid.",'p',".$remark.",NOW())";
+            if ($this->db->execute($sql) === false) return false;
             $sql="SELECT * FROM ".$this->cfg['tablepre']."ezshop_cart
-                    WHERE crtSession='".$crtref."' AND userId=".$this->uid;
+                    WHERE crtSession=".$crtref." AND userId=".(int) $this->uid.
+                    " ORDER BY crtId DESC";
             $rsitem=$this->db->execute($sql);
+	        if ($rsitem === false || $rsitem->EOF) return false;
             $sql="UPDATE ".$this->cfg['tablepre']."ezshop_cart_item
                     SET crtId=".$rsitem->fields['crtId']."
-                    WHERE crtSession='".$crtref."' ";
+                    WHERE crtSession=".$crtref;
             return ($this->db->execute($sql));
         }
 

@@ -13,6 +13,20 @@ $subtotal = 0;
 $tqty     = 0;
 $ezcart   = new EzShoppingCart();
 $ezshop = new EzShop2();
+
+if (!$sys_lanai->isUserLogin() || empty($_REQUEST['crtref']) || empty($_REQUEST['shpId']) || empty($_REQUEST['payId'])) {
+    $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=checkoutcart");
+    return;
+}
+
+$crtref = (string) $_REQUEST['crtref'];
+$shpId = (int) $_REQUEST['shpId'];
+$payId = (int) $_REQUEST['payId'];
+$crtRemark = isset($_REQUEST['crtRemark']) ? (string) $_REQUEST['crtRemark'] : '';
+if ($shpId < 1 || $payId < 1) {
+    $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=checkoutcart");
+    return;
+}
 ?>
 <div class="col-md-12">
 
@@ -28,10 +42,10 @@ $ezshop = new EzShop2();
 
 <?php
 $result = $ezcart->setCartSave(
-    $_REQUEST['crtref'],
-    $_REQUEST['shpId'],
-    $_REQUEST['payId'],
-    $_REQUEST['crtRemark']
+    $crtref,
+    $shpId,
+    $payId,
+    $crtRemark
 );
 
 if (!empty($result)) {
@@ -40,8 +54,8 @@ if (!empty($result)) {
 <?= _EZSHOP_SAVE_CART_COMPLETE; ?>
 
 <?php
-$crtitem    = $ezcart->getCartByRef($_REQUEST['crtref']);
-$cartdetail = $ezcart->getCartDetailByRef($_REQUEST['crtref']);
+$crtitem    = $ezcart->getCartByRef($crtref);
+$cartdetail = $ezcart->getCartDetailByRef($crtref);
 $memitem   = $ezcart->getMemberInfo();
 
 while (!$cartdetail->EOF) {
@@ -59,7 +73,7 @@ $amt = number_format($total, 2, '.', '');
 $inv = sprintf("%010d", $crtitem->fields['crtId']);
 
 // Load payment plugin
-$payitem = $ezcart->getPaymentMethod($_REQUEST['payId']);
+$payitem = $ezcart->getPaymentMethod($payId);
 if ($payitem->recordcount() > 0 && !empty($payitem->fields['payModule'])) {
     echo '<br><br><span style="color:red">*</span>';
     require_once(
