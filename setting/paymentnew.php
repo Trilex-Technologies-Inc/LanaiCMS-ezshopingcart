@@ -20,8 +20,8 @@ $ezshop = new EzShop2();
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 <a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a><br><br>
 
-<table cellpadding="3" cellspacing="1">
 <form name="form" method="post" action="<?=$_SERVER['PHP_SELF'];?>">
+<table cellpadding="3" cellspacing="1">
 
 <input type="hidden" name="modname" value="<?=$module_name;?>">
 <input type="hidden" name="mf" value="ezedit">
@@ -107,5 +107,6 @@ This is some <strong>sample text</strong>.
         </select>
     </td>
 </tr>
-</form>
 </table>
+<button type="submit"><?=_SAVE; ?></button>
+</form>

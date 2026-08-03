@@ -274,7 +274,7 @@ class EzShop2
     $is_sandbox = ($is_sandbox) ? 1 : 0; 
 
     $sql = "INSERT INTO " . $this->cfg['tablepre'] . "ezshop_payment
-    (payTitle, payDescription, payModule, payToken, paySecret, currency, is_sandbox)
+    (payTitle, payDescription, payModule, payToken, paySecret, currency, isSandbox)
     VALUES ('$payTitle', '$payDescription', '$payModule', '$payToken', '$paySecret', '$currency', $is_sandbox)";
 
     $rs = $this->db->execute($sql);
@@ -309,7 +309,7 @@ class EzShop2
         payToken='$payToken',
         paySecret='$paySecret',
         currency='$currency',
-        is_sandbox=$is_sandbox
+        isSandbox=$is_sandbox
     WHERE payId=$payId";
 
     $rs = $this->db->execute($sql);

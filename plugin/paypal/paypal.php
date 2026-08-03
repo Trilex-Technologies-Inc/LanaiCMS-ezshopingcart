@@ -1,7 +1,7 @@
 <?php
 $PAYPAL_CLIENT_ID = $payitem->fields['payToken'];
 $CURRENCY = $payitem->fields['currency'];
-$is_sandbox = $payitem->fields['is_sandbox'];
+$is_sandbox = $payitem->fields['isSandbox'];
 
 if ($is_sandbox) {
     $paypal_sdk_url = "https://www.sandbox.paypal.com/sdk/js?client-id=" . $PAYPAL_CLIENT_ID . "&currency=" . $CURRENCY;

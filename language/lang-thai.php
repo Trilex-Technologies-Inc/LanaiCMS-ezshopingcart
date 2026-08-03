@@ -88,6 +88,10 @@
 	// payment
 	define("_EZSHOP_PAYMENT_SETTING_INSTRUCTION","คลิก 'สร้าง' เพื่อสร้างข้อมูลการชำระเงิน คลิกเลือกเพื่อเลือกให้ทำงานหรือไม่ทำงาน หรือคลิก 'ลบ' เพื่อลบข้อมูลการข้อมูลการชำระเงิน");
 	define("_MODULE","ปลักอิน");
+	define("_TOKEN","รหัสไคลเอนต์");
+	define("_SECRET","รหัสลับ");
+	define("_CURRENCY","สกุลเงิน");
+	define("_SANDBOX_MODE","โหมดทดสอบ");
 	// new payment
 	define("_EZSHOP_PAYMENT_NEW_INSTRUCTION","กรุณากรอกข้อมูลให้ครบ");
 	// edit payment

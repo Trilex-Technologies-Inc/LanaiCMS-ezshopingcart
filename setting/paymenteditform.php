@@ -123,8 +123,8 @@ $rs = $ezshop->getPaymentMethod($_REQUEST['mid']);
     <td><?=_SANDBOX_MODE;?></td>
     <td>
         <select name="is_sandbox">
-            <option value="0" <?=($rs->fields['is_sandbox']==0)?'selected':'';?>>No</option>
-            <option value="1" <?=($rs->fields['is_sandbox']==1)?'selected':'';?>>Yes</option>
+            <option value="0" <?=($rs->fields['isSandbox']==0)?'selected':'';?>>No</option>
+            <option value="1" <?=($rs->fields['isSandbox']==1)?'selected':'';?>>Yes</option>
         </select>
     </td>
 </tr>

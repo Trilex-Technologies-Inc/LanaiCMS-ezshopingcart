@@ -186,7 +186,7 @@
     } else {
         $is_sandbox = isset($_REQUEST['is_sandbox']) ? (int)$_REQUEST['is_sandbox'] : 0;
 
-        $ezshop->setPaymentNew(
+        $result = $ezshop->setPaymentNew(
             $_REQUEST['payTitle'],
             $_REQUEST['payDescription'],
             $_REQUEST['payModule'],
@@ -195,7 +195,12 @@
             $_REQUEST['currency'],
             $is_sandbox // added sandbox
         );
-        $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=payment");
+        if ($result === false) {
+            $message = method_exists($ezshop->db, 'ErrorMsg') ? $ezshop->db->ErrorMsg() : 'Database error';
+            $sys_lanai->getErrorBox(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
+        } else {
+            $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=payment");
+        }
     }
     break;
 
@@ -205,7 +210,7 @@ case "paymentedit":
     } else {
         $is_sandbox = isset($_REQUEST['is_sandbox']) ? (int)$_REQUEST['is_sandbox'] : 0;
 
-        $ezshop->setPaymentEdit(
+        $result = $ezshop->setPaymentEdit(
             $_REQUEST['mid'],
             $_REQUEST['payTitle'],
             $_REQUEST['payDescription'],
@@ -215,7 +220,12 @@ case "paymentedit":
             $_REQUEST['currency'],
             $is_sandbox // added sandbox
         );
-        $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=payment");
+        if ($result === false) {
+            $message = method_exists($ezshop->db, 'ErrorMsg') ? $ezshop->db->ErrorMsg() : 'Database error';
+            $sys_lanai->getErrorBox(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
+        } else {
+            $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name."&mf=payment");
+        }
     }
     break;
 
