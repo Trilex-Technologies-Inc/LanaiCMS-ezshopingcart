@@ -16,7 +16,7 @@
         $this->page = _PAGE;
     }
 		
-		function RenderLayout($header,$grid,$footer)
+		function RenderLayout($header,$grid,$footer,$attributes = 'border=1 bgcolor=white')
 		{
 			echo "<table width=\"100%\" ><tr><td>",
 				 "</td></tr><tr><td>",
