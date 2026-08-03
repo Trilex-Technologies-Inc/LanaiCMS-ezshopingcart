@@ -2,7 +2,6 @@
 include_once("class.OrderPager.php");
 include_once("class.PaymentPager.php");
 include_once("class.ShippingPager.php");
-include_once("class.ShoppingCart.php");
 include_once("class.CategoryPager2.php");
 include_once("class.ProductPager2.php");
 
@@ -175,7 +174,7 @@ class EzShop2
         return ($this->db->execute($sql));
     }
 
-    function getOrder($filter = null)
+    function getOrder($filter = '')
     {
         $sql = "SELECT *
                     FROM " . $this->cfg['tablepre'] . "ezshop_cart," . $this->cfg['tablepre'] . "ezshop_cart_item," . $this->cfg['tablepre'] . "user
@@ -711,5 +710,9 @@ class EzShop2
 
 
 }
+
+// EzShoppingCart extends EzShop2, so it must be loaded after the parent class
+// has been declared. Loading it with the pager classes above is fatal on PHP 8.
+include_once("class.ShoppingCart.php");
 
 ?>
