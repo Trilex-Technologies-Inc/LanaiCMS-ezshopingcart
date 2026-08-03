@@ -76,11 +76,18 @@ $inv = sprintf("%010d", $crtitem->fields['crtId']);
 $payitem = $ezcart->getPaymentMethod($payId);
 if ($payitem->recordcount() > 0 && !empty($payitem->fields['payModule'])) {
     echo '<br><br><span style="color:red">*</span>';
-    require_once(
-        "modules/".$module_name."/plugin/".
-        $payitem->fields['payModule']."/".
-        $payitem->fields['payModule'].".php"
-    );
+    $paymentModule = (string) $payitem->fields['payModule'];
+    $paymentPlugin = __DIR__."/plugin/".$paymentModule."/".$paymentModule.".php";
+
+    if (!preg_match('/\A[a-zA-Z0-9_-]+\z/', $paymentModule)) {
+        error_log('Invalid ezshopingcart payment module: '.$paymentModule);
+        echo '<div class="alert alert-danger" role="alert">The selected payment method is invalid.</div>';
+    } elseif (!is_file($paymentPlugin)) {
+        error_log('Missing ezshopingcart payment plugin: '.$paymentPlugin);
+        echo '<div class="alert alert-danger" role="alert">The selected payment method is not available.</div>';
+    } else {
+        require_once $paymentPlugin;
+    }
 }
 
 } else {

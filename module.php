@@ -320,6 +320,11 @@ class EzShop2
 
     function setOrderStatus($mid, $state = "P")
     {
+        $mid = (int) $mid;
+        $state = strtolower((string) $state);
+        if ($mid < 1 || !in_array($state, array('p', 's', 'c', 't'), true)) {
+            return false;
+        }
         $sql = "UPDATE " . $this->cfg['tablepre'] . "ezshop_cart SET
                     crtStatus='" . $state . "'
                     WHERE crtId=$mid";

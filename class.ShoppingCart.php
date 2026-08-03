@@ -174,10 +174,35 @@
         }
 
          function getCartById($cid){
+            $cid = (int) $cid;
             $sql="SELECT * FROM ".$this->cfg['tablepre']."ezshop_cart
                     WHERE crtId=$cid";
             return ($this->db->execute($sql));
          }
+
+        function getCartByIdForUser($cid){
+            $cid = (int) $cid;
+            $sql="SELECT * FROM ".$this->cfg['tablepre']."ezshop_cart
+                    WHERE crtId=$cid AND userId=".(int) $this->uid;
+            return ($this->db->execute($sql));
+        }
+
+        function getCartDetailById($cid){
+            $cid = (int) $cid;
+            $sql="SELECT crtQuantity, prdPrice FROM ".$this->cfg['tablepre']."ezshop_cart_item
+                    WHERE crtId=$cid
+                    ORDER BY prdId";
+            return ($this->db->execute($sql));
+        }
+
+        function setPaidOrderStatusForUser($cid){
+            $cid = (int) $cid;
+            if ($cid < 1 || (int) $this->uid < 1) return false;
+            $sql="UPDATE ".$this->cfg['tablepre']."ezshop_cart
+                    SET crtStatus='t'
+                    WHERE crtId=$cid AND userId=".(int) $this->uid." AND crtStatus='p'";
+            return ($this->db->execute($sql));
+        }
 
         function getCartDetailByRef($crtref){
             $sql="SELECT * FROM ".$this->cfg['tablepre']."ezshop_cart_item,".$this->cfg['tablepre']."ezshop_product_item

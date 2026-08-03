@@ -1,19 +1,25 @@
 <?php
 $PAYPAL_CLIENT_ID = $payitem->fields['payToken'];
-$CURRENCY = $payitem->fields['currency'];
+$CURRENCY = strtoupper(trim((string) $payitem->fields['currency']));
 $is_sandbox = $payitem->fields['isSandbox'];
 
-if ($is_sandbox) {
-    $paypal_sdk_url = "https://www.sandbox.paypal.com/sdk/js?client-id=" . $PAYPAL_CLIENT_ID . "&currency=" . $CURRENCY;
-} else {
-    $paypal_sdk_url = "https://www.paypal.com/sdk/js?client-id=" . $PAYPAL_CLIENT_ID . "&currency=" . $CURRENCY;
+if (empty($PAYPAL_CLIENT_ID) || !preg_match('/\A[A-Z]{3}\z/', $CURRENCY)) {
+    echo '<div class="alert alert-danger" role="alert">PayPal is not configured correctly.</div>';
+    return;
 }
+
+// The client ID determines sandbox versus live for the JavaScript SDK.
+$paypal_sdk_url = 'https://www.paypal.com/sdk/js?'.http_build_query(array(
+    'client-id' => $PAYPAL_CLIENT_ID,
+    'currency' => $CURRENCY,
+    'intent' => 'capture'
+), '', '&', PHP_QUERY_RFC3986);
 ?>
 <div style="max-width:400px;margin-top:20px">
     <div id="paypal-button-container"></div>
 </div>
 
-<script src="<?= $paypal_sdk_url ?>"></script>
+<script src="<?=htmlspecialchars($paypal_sdk_url, ENT_QUOTES, 'UTF-8');?>"></script>
 
 <script>
 paypal.Buttons({
@@ -21,11 +27,11 @@ paypal.Buttons({
     createOrder: function (data, actions) {
         return actions.order.create({
             purchase_units: [{
-                reference_id: "<?= $inv ?>",
-                description: "<?= $prd ?>",
+                reference_id: <?=json_encode($inv);?>,
+                description: <?=json_encode($prd);?>,
                 amount: {
-                    value: "<?= $amt ?>",
-                    currency_code: "<?= $CURRENCY ?>"
+                    value: <?=json_encode($amt);?>,
+                    currency_code: <?=json_encode($CURRENCY);?>
                 }
             }]
         });
@@ -34,8 +40,8 @@ paypal.Buttons({
     onApprove: function (data, actions) {
         return actions.order.capture().then(function (details) {
             window.location.href =
-                "module.php?modname=ezshopingcart&mf=paypal_success&order_id=" + data.orderID +
-                "&invoice=<?= $inv ?>&payId=<?= $_REQUEST['payId'] ?>";
+                "module.php?modname=ezshopingcart&mf=paypal_success&order_id=" +
+                encodeURIComponent(data.orderID) + "&invoice=" + encodeURIComponent(<?=json_encode($inv);?>);
         });
     },
 
